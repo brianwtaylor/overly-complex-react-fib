@@ -1,0 +1,24 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  -docker build -t brianwtaylor/overly-complex-react-fib -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run brianwtaylor/overly-complex-react-fib npm test -- --coverage
+
+after_success:
+  - docker build -t brianwtaylor/overly-complex-react-fib-client ./client
+  - docker build -t brianwtaylor/overly-complex-react-fib-nginx ./nginx
+  - docker build -t brianwtaylor/overly-complex-react-fib-server ./server
+  - docker build -t brianwtaylor/overly-complex-react-fib-worker ./worker
+
+  # Logs in to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Takes container images and pushes them to docker hub
+  - docker push brianwtaylor/overly-complex-react-fib-client
+  - docker push brianwtaylor/overly-complex-react-fib-nginx
+  - docker push brianwtaylor/overly-complex-react-fib-server
+  - docker push brianwtaylor/overly-complex-react-fib-worker
+

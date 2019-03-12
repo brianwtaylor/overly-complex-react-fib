@@ -1,5 +1,5 @@
 # Overview
-- This is an overly complex application built using React for calculating the Fibonacci sequennce of a number input
+- This is an overly complex application built using React for calculating the Fibonacci sequence of a number input
 # Following Technologies Used
 - React -> Frontend
 - Express -> API
